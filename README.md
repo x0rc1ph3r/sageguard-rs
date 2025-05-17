@@ -30,8 +30,8 @@ Inspired by tools like Slither (for Ethereum), SageGuard focuses on analyzing th
 Currently, SageGuard is a Rust project. To build and run:
 
 ```bash
-git clone https://github.com/x0rc1ph3r/sageguard.git
-cd sageguard
+git clone https://github.com/x0rc1ph3r/sageguard-rs.git
+cd sageguard-rs
 cargo build --release
 ```
 
