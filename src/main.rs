@@ -14,5 +14,7 @@ struct Args {
 
 fn main() {
     let args = Args::parse();
-    analyzer::analyze_path(&args.path);
+    if let Err(e) = analyzer::analyze_path(&args.path) {
+        eprintln!("{}", e);
+    }
 }

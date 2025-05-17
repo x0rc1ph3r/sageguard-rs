@@ -1,4 +1,5 @@
 use syn::{ItemStruct, Fields, Error};
+use colored::*;
 
 /// Check if any account fields might be missing `signer` attribute
 pub fn check_missing_signer(item_struct: &ItemStruct, file: &str) {
@@ -18,8 +19,10 @@ pub fn check_missing_signer(item_struct: &ItemStruct, file: &str) {
                     if !found_signer {
                         let ident = field.ident.as_ref().unwrap();
                         println!(
-                            "[WARNING] Account `{}` may be missing `signer` constraint. ({})",
-                            ident, file
+                            "{} Account `{}` may be missing `signer` constraint. ({})",
+                            "[WARNING]".yellow().bold(),
+                            ident,
+                            file
                         );
                     }
                 }
