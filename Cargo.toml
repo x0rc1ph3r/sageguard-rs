@@ -1,0 +1,10 @@
+[package]
+name = "sageguard-rs"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap = { version = "4.5.38", features = ["derive"] }
+walkdir = "2.4.0"
+syn = { version = "2.0.101", features = ["full"] }
+quote = "1.0.40"
