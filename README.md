@@ -87,4 +87,4 @@ This project is licensed under the MIT License.
 
 ## Contact
 
-Created by Farman Shaik — feel free to reach out on x.com/x0rc1ph3r.
+Created by Farman Shaik — feel free to reach out on https://x.com/x0rc1ph3r.
