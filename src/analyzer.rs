@@ -35,7 +35,8 @@ fn analyze_file(file: &File, filename: &str) {
     for item in &file.items {
         if let Item::Struct(s) = item {
             if is_anchor_account_struct(&s.attrs) {
-                println!("{} Found #[derive(Accounts)] struct: {} ({})", "[INFO]".cyan().bold(), s.ident, filename);
+                let line = s.ident.span().start().line;
+                println!("{} Found #[derive(Accounts)] struct: {} ({}:{})", "[INFO]".cyan().bold(), s.ident, filename, line);
                 checks::signer_check::check_missing_signer(s, filename);
             }
         }
@@ -44,6 +45,8 @@ fn analyze_file(file: &File, filename: &str) {
             if is_handler_fn(&func.sig.ident) {
                 println!("{} Found handler: {} ({})", "[INFO]".cyan().bold(), func.sig.ident, filename);
                 // Add function-level checks here
+            } else {
+                println!("{} Found function: {} ({})", "[INFO]".cyan().bold(), func.sig.ident, filename);
             }
         }
     }
