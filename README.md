@@ -48,10 +48,12 @@ Run SageGuard against your Anchor project directory:
 Example output:
 
 ```
-[INFO] Found #[derive(Accounts)] struct: Transfer (programs/my_program/src/lib.rs:10)
-[WARNING] Account `authority` may be missing `signer` constraint. (programs/my_program/src/lib.rs:12)
-[INFO] Found program : my_program (programs/my_program/src/lib.rs:5)
-[INFO] Found function: initialize (programs/my_program/src/lib.rs:25)
+[INFO] Found program : my_program (programs/my_program/src/lib.rs:6)
+  [INFO] Function inside program: initialize (programs/my_program/src/lib.rs:9)
+  [INFO] Function inside program: transfer (programs/my_program/src/lib.rs:15)
+[INFO] Found #[derive(Accounts)] struct: Transfer (programs/my_program/src/lib.rs:23)
+[ERROR] Struct `Transfer` is missing a `Signer` type on one or more accounts. (programs/my_program/src/lib.rs:23)
+[INFO] Found #[derive(Accounts)] struct: Initialize (programs/my_program/src/lib.rs:36)
 ```
 
 ---
