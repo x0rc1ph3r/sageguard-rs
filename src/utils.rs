@@ -1,4 +1,4 @@
-use syn::{Attribute, Error, Ident};
+use syn::{Attribute, Error};
 
 /// Detects if struct is #[derive(Accounts)]
 
@@ -20,10 +20,4 @@ pub fn is_anchor_account_struct(attrs: &[Attribute]) -> bool {
             false
         }
     })
-}
-
-
-/// Detect handler function (basic heuristic)
-pub fn is_handler_fn(ident: &Ident) -> bool {
-    ident == "handler" || ident.to_string().starts_with("handle_")
 }

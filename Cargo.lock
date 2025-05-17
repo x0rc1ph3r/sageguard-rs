@@ -144,7 +144,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "sageguard-rs"
+name = "sageguard"
 version = "0.1.0"
 dependencies = [
  "clap",

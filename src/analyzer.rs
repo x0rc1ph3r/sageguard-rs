@@ -1,5 +1,5 @@
 use crate::checks;
-use crate::utils::{is_anchor_account_struct, is_handler_fn};
+use crate::utils::{is_anchor_account_struct};
 use std::fs;
 use std::path::Path;
 use walkdir::WalkDir;
@@ -41,13 +41,30 @@ fn analyze_file(file: &File, filename: &str) {
             }
         }
 
-        if let Item::Fn(func) = item {
-            if is_handler_fn(&func.sig.ident) {
-                println!("{} Found handler: {} ({})", "[INFO]".cyan().bold(), func.sig.ident, filename);
-                // Add function-level checks here
-            } else {
-                println!("{} Found function: {} ({})", "[INFO]".cyan().bold(), func.sig.ident, filename);
+        if let Item::Mod(m) = item {
+            let line = m.ident.span().start().line;
+            if m.attrs.iter().any(|attr| attr.path().is_ident("program")) {
+                println!("{} Found program : {} ({}:{})", "[INFO]".cyan().bold(), m.ident, filename, line);
             }
+
+            if let Some((_, items)) = &m.content {
+                for inner_item in items {
+                    if let Item::Fn(func) = inner_item {
+                        let line = func.sig.ident.span().start().line;
+                        println!("  {} Function inside program: {} ({}:{})", "[INFO]".cyan().bold(), func.sig.ident, filename, line);
+                        // TODO: Add function-level checks here
+                    }
+                    // TODO: add more checks for structs/enums/etc inside the module here
+                }
+            } else {
+                println!("{} Module '{}' has no inline content", "[WARN]".yellow().bold(), m.ident);
+            }
+        }
+
+        if let Item::Fn(func) = item {
+            let line = func.sig.ident.span().start().line;
+            println!("{} Found function: {} ({}:{})", "[INFO]".cyan().bold(), func.sig.ident, filename, line);
+            // TODO: Add function-level checks here
         }
     }
 }
