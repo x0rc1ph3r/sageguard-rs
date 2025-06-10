@@ -14,7 +14,7 @@ pub fn check_missing_signer(item_struct: &ItemStruct, file: &str) {
             let line = item_struct.ident.span().start().line;
             println!(
                 "{} Struct `{}` is missing a `Signer` type on one or more accounts. ({}:{})",
-                "[ERROR]".red().bold(),
+                "[WARMING]".yellow().bold(),
                 item_struct.ident,
                 file,
                 line

@@ -38,6 +38,7 @@ fn analyze_file(file: &File, filename: &str) {
                 let line = s.ident.span().start().line;
                 println!("{} Found #[derive(Accounts)] struct: {} ({}:{})", "[INFO]".cyan().bold(), s.ident, filename, line);
                 checks::signer_check::check_missing_signer(s, filename);
+                checks::state_overwrite_check::check_duplicate_account_types(s, filename);
             }
         }
 
@@ -52,19 +53,18 @@ fn analyze_file(file: &File, filename: &str) {
                     if let Item::Fn(func) = inner_item {
                         let line = func.sig.ident.span().start().line;
                         println!("  {} Function inside program: {} ({}:{})", "[INFO]".cyan().bold(), func.sig.ident, filename, line);
-                        // TODO: Add function-level checks here
+                        checks::cpi_check::detect_cpi_in_fn(func, filename);
                     }
-                    // TODO: add more checks for structs/enums/etc inside the module here
                 }
             } else {
                 println!("{} Module '{}' has no inline content", "[WARN]".yellow().bold(), m.ident);
             }
         }
 
-        if let Item::Fn(func) = item {
-            let line = func.sig.ident.span().start().line;
-            println!("{} Found function: {} ({}:{})", "[INFO]".cyan().bold(), func.sig.ident, filename, line);
-            // TODO: Add function-level checks here
-        }
+        // if let Item::Fn(func) = item {
+        //     let line = func.sig.ident.span().start().line;
+        //     println!("{} Found function: {} ({}:{})", "[INFO]".cyan().bold(), func.sig.ident, filename, line);
+        //     // Add function-level checks here
+        // }
     }
 }
