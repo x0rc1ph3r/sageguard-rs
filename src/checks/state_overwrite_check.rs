@@ -59,7 +59,7 @@ pub fn check_duplicate_account_types(item_struct: &ItemStruct, file: &str) {
             if lines.len() > 1 {
                 let line_str = lines.iter().map(|l| format!("{}:{}", file, l)).collect::<Vec<_>>().join(", ");
                 println!(
-                    "{} Duplicate `Account<{}>` fields in struct `{}`. Consider using a separate `#[derive(Accounts)]` struct. ({})",
+                    "{} Duplicate `Account<{}>` fields in struct `{}`. Consider using a separate `#[derive(Accounts)]` struct. ({})\nFor more details, see: https://hackmd.io/@S3v3ru5/Byia-fQHJe\n",
                     "[ERROR]".red().bold(),
                     ty,
                     item_struct.ident,
